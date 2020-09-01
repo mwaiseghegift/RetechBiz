@@ -1,0 +1,18 @@
+{% extends 'extended_base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <br><br><br>
+
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <br>
+        <p>Are you sure you want to delete {{object}}?</p>
+        <input class="btn" type="submit" value="Confirm">
+        <a class="btn" href="{% url 'mainbiz:blog_detail' pk=blog.pk %}">Cancel</a>
+
+    </form>
+</div>
+
+{% endblock body %}

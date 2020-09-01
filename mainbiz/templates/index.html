@@ -1,0 +1,280 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Home{% endblock title %}
+{% block body %}
+
+  
+  <!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro">
+
+    <div class="intro-content">
+      <h2>One <span>stop tech</span><br>Arena</h2>
+      <div>
+        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        <a href="#services" class="btn-projects scrollto">Our Services</a>
+      </div>
+    </div>
+{% for intro in intros %}
+    <div id="intro-carousel" class="owl-carousel" >
+    {% if intro.image1 %}
+      <div class="item" style="background-image: url('{{intro.image1_thumbnail.url}}');"></div>
+    {% endif %}
+    {% if intro.image2 %}
+      <div class="item" style="background-image: url('{{intro.image2_thumbnail.url}}');"></div>
+    {% endif %}
+    {% if intro.image3 %}
+      <div class="item" style="background-image: url('{{intro.image3_thumbnail.url}}');"></div>
+    {% endif %}
+    {% if intro.image4 %}
+      <div class="item" style="background-image: url('{{intro.image4_thumbnail.url}}');"></div>
+    {% endif %}
+    {% if intro.image5 %}
+      <div class="item" style="background-image: url('{{intro.image5_thumbnail.url}}');"></div>
+    {% endif %}
+    </div>
+{% endfor %}
+
+  </section><!-- #intro -->
+
+  <main id="main">
+
+    <!--==========================
+      About Section
+    ============================-->
+    <section id="about" class="wow fadeInUp">
+      <div class="container">
+        <div class="row">
+        {% for about in abouts %}
+          <div class="col-lg-6 about-img">
+                {% if about.image %}
+                  <img src="{{ about.image.url }}" alt="about-image">
+                {% endif %}
+          </div>
+
+          <div class="col-lg-6 content">
+            <h2>{{about.title}}</h2>
+            <h3>{{ about.description }};</h3>
+
+{% for aboutusservice in about.about_service.all %}
+            <ul>
+              <li><i class="ion-android-checkmark-circle"></i> {{ aboutusservice.name }}.</li>
+              {% comment %} <li><i class="ion-android-checkmark-circle"></i> Tech software and hardware repairs.</li>
+              <li><i class="ion-android-checkmark-circle"></i> Hacking Labs.</li>
+              <li><i class="ion-android-checkmark-circle"></i> Tech news and latest technologies.</li> {% endcomment %}
+            </ul>
+{% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </section><!-- #about -->
+
+    <!--==========================
+      Services Section
+    ============================-->
+    <section id="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>Services</h2>
+          <p>Our able Team has really worked together to offer the following services</p>
+        </div>
+
+      
+        <div class="row">
+          {% for service in services %}
+            <a href="#">
+              <div class="col-lg-6">
+                <div class="box wow fadeInLeft">
+                {% if service.image %}
+                  <div class="icon"><i class="{{ service.image }}"></i></div>
+                {% endif %}
+                  <h4 class="title"><a href="{{service.link}}">{{service.name}}</a></h4>
+                  <p class="description">{{ service.description }}.</p>
+                </div>
+              </div>
+             </a>
+            {% endfor %}
+        </div>
+       
+   
+      </div>
+    </section>
+
+    <!--==========================
+      Clients Section
+    ============================-->
+    <section id="clients" class="wow fadeInUp">
+      <div class="container">
+        <div class="section-header">
+          <h2>Clients</h2>
+          <p>Sed tamen tempor magna labore dolore dolor sint tempor duis magna elit veniam aliqua esse amet veniam enim export quid quid veniam aliqua eram noster malis nulla duis fugiat culpa esse aute nulla ipsum velit export irure minim illum fore</p>
+        </div>
+
+        <div class="owl-carousel clients-carousel">
+          <img src="{% static 'img/clients/client-1.png' %}" alt="">
+          <img src="{% static 'img/clients/client-2.png' %}" alt="">
+          <img src="{% static 'img/clients/client-3.png' %}" alt="">
+          <img src="{% static 'img/clients/client-4.png' %}" alt="">
+          <img src="{% static 'img/clients/client-5.png' %}" alt="">
+          <img src="{% static 'img/clients/client-6.png' %}" alt="">
+          <img src="{% static 'img/clients/client-7.png' %}" alt="">
+          <img src="{% static 'img/clients/client-8.png' %}" alt="">
+        </div>
+
+      </div>
+    </section><!-- #clients -->
+
+    <!--==========================
+      Gallery Section
+    ============================-->
+    <section id="portfolio" class="wow fadeInUp">
+    
+      <div class="container">
+        <div class="section-header">
+          <h2>Gallery</h2>
+          <p>Just picked our favourite, For more click <a class="btn btn-success" href="{% url 'mainbiz:gallery' %}">here</a></p>
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row no-gutters">
+            
+        {% for gallery in galleries %}
+          <div class="col-lg-3 col-md-4">
+            <div class="portfolio-item wow fadeInUp">
+              {% if gallery.image %}
+                    <a href="{{ gallery.image_thumbnail.url }}" class="portfolio-popup">
+                    <img src="{{ gallery.image_thumbnail.url }}" alt="">
+                {% endif %}
+                <div class="portfolio-overlay">
+                  <div class="portfolio-info"><h2 class="wow fadeInUp">{{ gallery.name }}</h2></div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %} 
+        </div>
+      </div>
+        
+    </section><!-- #gallery -->
+
+    <!--==========================
+      Testimonials Section
+    ============================-->
+    <section id="testimonials" class="wow fadeInUp">
+      <div class="container">
+        <div class="section-header">
+          <h2>Testimonials</h2>
+          <p>We allow our loyal users to post testimonials, we dont filter them, so they are hundred percent original</p>
+        </div>
+
+        <div class="owl-carousel testimonials-carousel">
+          {% for testimonial in testimonials %}
+            <div class="testimonial-item">
+                <p>
+                  <img src="{% static 'img/quote-sign-left.png' %}" class="quote-sign-left" alt="">
+                  {{ testimonial.text }}
+                  <img src="{% static 'img/quote-sign-right.png' %}" class="quote-sign-right" alt="">
+                </p>
+                {% if testimonial.image %}
+                  <img src="{{ testimonial.image.url }}" class="testimonial-img" alt="">
+                {% endif %}
+                <h3>{{testimonial.user}}</h3>
+                <h4>{{testimonial.category}}</h4>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+            
+
+    </section>
+
+
+    <!--==========================
+      Our Team Section
+    ============================-->
+    <section id="team" class="wow fadeInUp">
+       <div class="container">
+        <div class="section-header">
+          <h2>My Team</h2>
+        </div>
+        <div class="row">
+          {% for manager in managers %}
+            <div class="col-lg-3 col-md-6">
+              <div class="member">
+                {% if manager.image %}
+                  <div class="pic"><img src="{{ manager.image_thumbnail.url }}" alt="committee image"></div>
+                {% endif %}
+                <div class="details">
+                  <h4>{{ manager.user }}</h4>
+                  <span>{{ manager.category }}</span>
+                  <div class="social">
+                    <a href="{{manager.twitter}}"><i class="fa fa-twitter"></i></a>
+                    <a href="{{manager.facebook}}"><i class="fa fa-facebook"></i></a>
+                    <a href="{{manager.google}}"><i class="fa fa-google-plus"></i></a>
+                    <a href="{{manager.linkedin}}"><i class="fa fa-linkedin"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </section><!-- #team -->
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="wow fadeInUp">
+      <div class="container">
+        <div class="section-header">
+          <h2>Contact Us</h2>
+          <p>Below is my Email where you can send your comments or any other enqueries. I and my team we'll be available all the time</p>
+        </div>
+
+        <div class="row contact-info">
+
+          <div class="col-md-4">
+            <div class="contact-address">
+              <i class="ion-ios-location-outline"></i>
+              <h3>Address</h3>
+              <address>G47 Jombo Estate, Mwatate 47-80305, Kenya</address>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-phone">
+              <i class="ion-ios-telephone-outline"></i>
+              <h3>Phone Number</h3>
+              <p><a href="tel:+254712860997">+254 712860997</a></p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="contact-email">
+              <i class="ion-ios-email-outline"></i>
+              <h3>Email</h3>
+              <p><a href="mailto:info@example.com">admin@retechbiz.com</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mb-4">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22864.11283411948!2d-73.96468908098944!3d40.630720240038435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbg!4v1540447494452" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+
+{% endblock body %}

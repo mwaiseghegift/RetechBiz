@@ -1,0 +1,40 @@
+{% extends 'extended_base.html' %}
+
+{% block body %}
+
+    <section id="portfolio" class="wow fadeInUp">
+    
+      <div class="container">
+        <div class="section-header">
+          <h2>Gallery</h2>
+          <p>Just picked our favourite, For more click <a href="{% url 'mainbiz:gallery' %}">here</a></p>
+        </div>
+      </div>
+      
+      <div class="container" style="text-align: center;">
+        <a class="btn btn-success fa fa-plus" href="{% url 'mainbiz:gallery_create' %}"></a><br><br>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row no-gutters">
+            
+        {% for gallery in galleries %}
+          <div class="col-lg-3 col-md-4">
+            <div class="portfolio-item wow fadeInUp">
+                {% if gallery.image %}
+                    <a href="{{ gallery.image_thumbnail.url }}" class="portfolio-popup">
+                    <img src="{{ gallery.image_thumbnail.url }}" alt="">
+                {% endif %}
+                <div class="portfolio-overlay">
+                  <div class="portfolio-info"><h2 class="wow fadeInUp">{{ gallery.name }}</h2></div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %} 
+        </div>
+      </div>
+        
+    </section><!-- #gallery -->
+
+{% endblock body %}

@@ -1,0 +1,12 @@
+{% extends "extended_base.html" %}
+{% load static %}
+{% block title%}{{profile.user.username}}{% endblock %}
+{% block body %}
+<br><br><br>
+  <div class="container">
+  <h3>Profile</h3><br>
+  <img src="{{profile.image_thumbnail.url}}" alt=""><br><br>
+      <h3>{{ profile.user.username }}, {{ profile.status }}</h3>
+  </div>
+
+{% endblock body %}

@@ -1,0 +1,14 @@
+{% block contact %}
+     <div class="container col-md-8">
+        <form action="" method="post">
+          {% csrf_token %}
+
+          <fieldset>
+            {{ form | crispy }}
+          </fieldset>
+          <div style="text-align: center;">
+            <input class="btn btn-primary" type="submit" value="Send Message">
+          </div>
+        </form>
+      </div>
+{% endblock contact %}

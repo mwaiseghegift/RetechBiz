@@ -184,7 +184,7 @@
                 {% if testimonial.image %}
                   <img src="{{ testimonial.image.url }}" class="testimonial-img" alt="">
                 {% endif %}
-                <h3>{{testimonial.user}}</h3>
+                <a href="{% url 'profiles:profile_details' testimonial.user.username %}"><h3>{{testimonial.user}}</h3></a>
                 <h4>{{testimonial.category}}</h4>
             </div>
             {% endfor %}
@@ -211,7 +211,7 @@
                   <div class="pic"><img src="{{ manager.image_thumbnail.url }}" alt="committee image"></div>
                 {% endif %}
                 <div class="details">
-                  <h4>{{ manager.user }}</h4>
+                  <a href="{% url 'profiles:profile_details' manager.user.username %}"><h4>{{ manager.user }}</h4></a>
                   <span>{{ manager.category }}</span>
                   <div class="social">
                     <a href="{{manager.twitter}}"><i class="fa fa-twitter"></i></a>

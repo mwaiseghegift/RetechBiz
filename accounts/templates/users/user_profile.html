@@ -1,12 +1,20 @@
 {% extends "extended_base.html" %}
 {% load static %}
+{% for profile in profiles %}
 {% block title%}{{profile.user.username}}{% endblock %}
 {% block body %}
 <br><br><br>
-  <div class="container">
+  <div class="container col-8">
   <h3>Profile</h3><br>
-  <img src="{{profile.image_thumbnail.url}}" alt=""><br><br>
-      <h3>{{ profile.user.username }}, {{ profile.status }}</h3>
-  </div>
+  <img  src="{{profile.image_thumbnail.url}}" alt=""><br><br>
+      <h3>{{ profile.user.username }}, {{ profile.category }}</h3><br>
+      
+      {% if profile.user == user%}
+
+        <a href={% url 'profiles:edit-profile' request.user.username %} ><button class="btn btn-success">Update</button></a>
+
+      {% endif %}
+  </div>  
 
 {% endblock body %}
+{% endfor %}

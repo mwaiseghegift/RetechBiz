@@ -14,6 +14,9 @@ User = get_user_model()
 
 from tinymce.models import HTMLField
 
+from django.utils.text import slugify
+import uuid #ndo tuwe na id ndefu
+
 # Create your models here.
 class Gallery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gallery_user', null=True)
@@ -150,10 +153,29 @@ class Category(models.Model):
     @property
     def no_of_blogs(self):
         return Blog.objects.filter(category=self).count()
+
+class Tag(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Tag')
+    slug = models.SlugField(null=False, unique=True)
+
+    class Meta:
+        verbose_name_plural='Tags'
+
+    def get_absolute_url(self):
+        return reverse("mainbiz:tags", arg=[self.slug])
     
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)    
+       
     
 
 class Blog(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title  = models.CharField(max_length=50)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, max_length=50, related_name='category',
@@ -169,11 +191,13 @@ class Blog(models.Model):
                         options={'quality':60})
     content = models.TextField()
     text = HTMLField(null=True, default='')
+    tags = models.ManyToManyField(Tag, related_name='tags', blank=True)
     source = models.CharField(max_length=50)
     source_link = models.URLField(default='#')
     slug = models.SlugField(unique=True)
     pub_date = models.DateTimeField(default=timezone.now)
     updated_on = models.DateTimeField(default=timezone.now)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title+' by '+self.author.username
@@ -186,7 +210,12 @@ class Blog(models.Model):
         return Comment.objects.filter(post=self).count()
 
     def get_absolute_url(self):
-        return reverse("mainbiz:blog_detail", kwargs={"pk": self.pk})
+        return reverse("mainbiz:blog-detail", args=[str(self.id)]) 
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -195,12 +224,12 @@ class Comment(models.Model):
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
 
-    def get_absolute_url(self):
-        return reverse("blog_detail", kwargs={"pk": self.pk})
+    # def get_absolute_url(self):
+    #     return reverse("blog-detail", kwargs={'blog_id':self.blog.id})
     
 
     def __str__(self):
-        return self.author.username+' - '+self.content
+        return self.author.username +' - '+self.content
 
     def replies(self):
         return Comment.objects.filter(parent=self)
@@ -212,4 +241,4 @@ class Comment(models.Model):
         return True
     
     
-    
+

@@ -86,7 +86,7 @@
               <li class="menu-has-children"><a href="">{{ request.user.username }}</a>
                 <ul>
                   <li><a href="{% url 'account_logout' %}">Logout</a></li>
-                  <li><a href="{% url 'profiles:user_profile' %}">View Profile</a></li>
+                  <li><a href="{% url 'profiles:profile_details' request.user %}">View Profile</a></li>
                 </ul>
               </li>
           {% else %}

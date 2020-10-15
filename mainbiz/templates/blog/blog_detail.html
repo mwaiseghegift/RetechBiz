@@ -21,8 +21,8 @@
       <!--================Blog Area =================-->
       {% if blog.author == user %}
          <div class="form-buttons container col-7">
-            <a class="btn" href="{% url 'mainbiz:blog_update' pk=blog.pk %}">Update</a>
-            <a class="btn" href="{% url 'mainbiz:blog_delete' pk=blog.pk %}">Delete</a>
+            <a class="btn" href="{% url 'mainbiz:blog_update' blog.id %}">Update</a>
+            <a class="btn" href="{% url 'mainbiz:blog_delete' blog.id %}">Delete</a>
          </div>
       {% endif %}
 
@@ -164,7 +164,7 @@
                      </div>
                      </div>
                   </div>
-{% include 'blog_detail_base.html' %}
+{% include 'blog_base.html' %}
       <!--================ Blog Area end =================-->
    </main>
 

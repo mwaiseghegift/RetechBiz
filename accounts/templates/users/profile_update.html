@@ -1,18 +1,26 @@
 {% extends 'extended_base.html' %}
 {% load static %}
+<head>{{blogform.media}}</head>
 {% load crispy_forms_tags %}
+{% block body %}
 
-{% block profile_content %}
-
-<div class="container">
-    <h3>Update Profile</h3>
-
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <input class='btn btn-success' type="submit" value="Update">
-    </form>
+<div class="container col-md-8">
+    <div class="entertainment_header">
+        <h4>New Post</h4>
+    </div>
+    
+    <div class="create_form">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{u_form | crispy}}
+            {{ p_form| crispy}}
+            <br>
+            <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+    </div>
+    
 </div>
+<script>var editor=new MediumEditor('.editable');</script>
 
 
-{% endblock profile_content %}
+{% endblock body %}

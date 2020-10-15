@@ -42,22 +42,22 @@ class Manager(models.Model):
     
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
-    profile_picture = models.ImageField(upload_to='images/profile_pics/%Y/%m/%d')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(upload_to='images/profile_pics/%Y/%m/%d', default='images/profile_pics/default.png')
     image_thumbnail = ImageSpecField(
                             source='profile_picture',
                             processors=[ResizeToFill(300,300)],
                             format='JPEG',
                             options={'quality':80})
     status = models.CharField(max_length=256, null=True, blank=True)
-    category = models.CharField(choices=CATEGORY, max_length=50)
-    bio = models.TextField(max_length=1000)
-    facebook = models.URLField()
-    twitter = models.URLField()
-    email = models.EmailField()
-    linkedin = models.URLField()
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(choices=CATEGORY, max_length=50, default='Member')
+    bio = models.TextField(max_length=1000, null=True, blank=True)
+    facebook = models.URLField(null=True, blank=True)
+    twitter = models.URLField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    linkedin = models.URLField(null=True, blank=True)
+    updated = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
 
     def __str__(self):

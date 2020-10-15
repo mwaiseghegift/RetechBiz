@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (Service, Gallery, 
                     About, AboutUsService, Testimonial,
-                    Sponsor, Intro, Blog, Category, Comment)
+                    Sponsor, Intro, Blog, Category, Comment,
+                    Tag)
 # Register your models here.
 
 class ServiceAdmin(admin.ModelAdmin):
@@ -70,3 +71,6 @@ class CategoryAdmin(admin.ModelAdmin):
         verbose_name_plural = 'Categories'
 
 admin.site.register(Category, CategoryAdmin)
+
+
+admin.site.register(Tag)

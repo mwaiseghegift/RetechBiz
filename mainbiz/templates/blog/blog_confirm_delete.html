@@ -10,7 +10,7 @@
         <br>
         <p>Are you sure you want to delete {{object}}?</p>
         <input class="btn" type="submit" value="Confirm">
-        <a class="btn" href="{% url 'mainbiz:blog_detail' pk=blog.pk %}">Cancel</a>
+        <a class="btn" href="{% url 'mainbiz:blog-detail' blog.id %}">Cancel</a>
 
     </form>
 </div>

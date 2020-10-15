@@ -1,12 +1,12 @@
                    <div class="col-lg-4">
                         <div class="blog_right_sidebar">
                             <aside class="single_sidebar_widget search_widget">
-                                <form action="#">
+                                <form action="{% url 'mainbiz:blog-search' %}">
                                     <div class="form-group">
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" placeholder='Search Keyword'
                                                 onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = 'Search Keyword'">
+                                                onblur="this.placeholder = 'Search Keyword'" }}>
                                             <div class="input-group-append">
                                                 <button class="btns" type="button"><i class="ti-search"></i></button>
                                             </div>
@@ -39,7 +39,7 @@
                                             <img src="{{blog.feed_thumbnail.url}}" alt="post">
                                         {% endif %}
                                         <div class="media-body">
-                                            <a href="{% url 'mainbiz:blog_detail' blog.pk %}">
+                                            <a href="{% url 'mainbiz:blog-detail' blog.id %}">
                                                 <h3>{{ blog.title }}</h3>
                                             </a>
                                             <p><small>{{blog.pub_date|timesince}}<s/mall></p>

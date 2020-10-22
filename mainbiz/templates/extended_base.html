@@ -42,7 +42,7 @@
   <section id="topbar" class="d-none d-lg-block">
     <div class="container clearfix">
       <div class="contact-info float-left">
-        <i class="fa fa-envelope-o"></i> <a href="mailto:itsregalo@gmail.com">admin@revealbiz.com</a>
+        <i class="fa fa-envelope-o"></i> <a href="mailto:itsregalo@gmail.com">admin@retech.com</a>
         <i class="fa fa-phone"></i> +254 712860997
       </div>
       <div class="social-links float-right">
@@ -70,16 +70,16 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="{% url 'mainbiz:index' %}">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Gallery</a></li>
-          <li><a href="#team">Team</a></li>
+          <li><a href="{% url 'mainbiz:blog_list' %}">Blog</a></li>
+          
+          <li><a href="{% url 'mainbiz:services' %}">Services</a></li>
+          <li><a href="{% url 'mainbiz:gallery' %}">Gallery</a></li>
           <li class="menu-has-children"><a href="">More</a>
             <ul>
-              <li><a href="{% url 'mainbiz:gallery' %}">Gallery</a></li>
+              <li><a href="#team">Team</a></li>
               <li><a href="#">Achievements</a></li>
               <li><a href="#">About CEO</a></li>
-              <li><a href="{% url 'mainbiz:blog_list' %}">Blog</a></li>
+              <li><a href="#about">About Us</a></li>
             </ul>
           </li>
           {% if request.user.is_authenticated %}

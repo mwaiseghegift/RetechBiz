@@ -8,7 +8,8 @@
   <h3>Profile</h3><br>
   <img  src="{{profile.image_thumbnail.url}}" alt=""><br><br>
       <h3>{{ profile.user.username }}, {{ profile.category }}</h3><br>
-      
+      <br>
+      <p>{{ profile.bio|safe }}</p>
       {% if profile.user == user%}
 
         <a href={% url 'profiles:edit-profile' request.user.username %} ><button class="btn btn-success">Update</button></a>
@@ -18,3 +19,4 @@
 
 {% endblock body %}
 {% endfor %}
+

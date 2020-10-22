@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (View, ListView, DetailView, TemplateView,
                                 CreateView, UpdateView, DeleteView)
 from .models import (Gallery, Service, About, AboutUsService, Category, 
-                    Testimonial, Intro, Blog, Comment)
+                    Testimonial, Intro, Blog, Comment, Tag)
 from accounts.models import Manager, Profile
 from django.utils import timezone
 from .forms import ContactForm, CommentForm
@@ -17,6 +17,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.template import loader
 from django.db.models import Q
 from django.core.paginator import Paginator
+
+from django.conf import settings
+
+
+MAILCHIMP_API_KEY = settings.MAILCHIMP_API_KEY
+MAILCHIMP_DATA_CENTRE = settings.MAILCHIMP_DATA_CENTRE
+MAILCHIMP_EMAIL_LIST_ID = settings.MAILCHIMP_EMAIL_LIST_ID
+
+api_url = f'https://{MAILCHIMP_DATA_CENTRE}.api.mailchimp.com/3.0'
+members_endpoint = f'{api_url}/lists/{MAILCHIMP_EMAIL_LIST_ID}/members'
 
 
 # Create your views here.
@@ -41,9 +51,6 @@ class IndexView(ListView):
         data['managers'] = Manager.objects.all()
         return data
 
-    
-
-
 
 class GalleryView(ListView):
     model = Gallery
@@ -64,23 +71,38 @@ class GalleryCreateView(LoginRequiredMixin, CreateView):
         form.instance.posted_by = self.request.user
         return super().form_valid(form)
 
-class BlogListView(ListView):
-    model = Blog
-    template_name = 'blog/blog_list.html'
-    context_object_name = 'blogs'
-    paginate_by = 10
 
-    def get_queryset(self):
-        return Blog.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+def BlogListView(request):
+    blogs = Blog.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:10]
+
+    gallery_feed = Gallery.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:6]
+    categories = Category.objects.all()
+    recent_post = Blog.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+    tags = Tag.objects.all()
+
+    query = request.GET.get('q', None)
     
+    if query is not None:
+        blogs = Blog.objects.filter(Q(title__icontains=query) | 
+                                    Q(content__icontains=query)
+                                    )
 
-    def get_context_data(self, **kwargs):
-        data = super(BlogListView, self).get_context_data(**kwargs)
-        data["gallery_feed"] = Gallery.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:6]
-        data["categories"] = Category.objects.all()
-        data["recent_post"] = Blog.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
-        return data
+    paginator = Paginator(blogs, 4)  #show 10 blogs per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
+    template = loader.get_template('blog/blog_list.html')
+
+    context = {
+        'blogs': blogs,
+        'gallery_feed': gallery_feed,
+        'categories':categories,
+        'recent_post':recent_post,
+        'page_obj':page_obj,
+        'tags':tags,
+    }
+
+    return HttpResponse(template.render(context,request))
 
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
@@ -146,6 +168,7 @@ class BlogCategory(ListView):
 
 @login_required
 def BlogDetail(request, blog_id):
+    print(request.GET)
     blog = get_object_or_404(Blog, id=blog_id)
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -154,6 +177,10 @@ def BlogDetail(request, blog_id):
     categories = Category.objects.all()
     recent_post = Blog.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
     comments = Comment.objects.filter(post=blog).order_by('created_date')
+    tags = Tag.objects.all()
+
+
+    #for the search function
 
     if request.user.is_authenticated:
         profile = Profile.objects.get(user=user)
@@ -179,52 +206,79 @@ def BlogDetail(request, blog_id):
         'categories':categories,
         'recent_post':recent_post,
         'form':form,
-        'comments':comments
+        'comments':comments,
+        'tags':tags,
     }
 
     return HttpResponse(template.render(context,request))
 
-# class BlogDetailView(LoginRequiredMixin, DetailView):
-#     model = Blog
-#     template_name = 'blog/blog_detail.html'
-
-#     def get_context_data(self, **kwargs):
-#         data = super(BlogDetailView, self).get_context_data(**kwargs)
-#         data["gallery_feed"] = Gallery.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:6]
-#         data["categories"] = Category.objects.all()
-#         data["recent_post"] = Blog.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
-#         data["comments"] = Comment.objects.filter(post=self.get_object()).order_by('created_date')
-#         data["form"] = CommentForm(instance=self.request.user)
-#         return data
-
-#     def post(self, request, *args, **kwargs):
-#         new_comment=Comment(content=request.POST.get('content'),
-#                             author=self.request.user,
-#                             post=self.get_object())
-#         new_comment.save()
-#         return self.get(self, request, *args, **kwargs)
-
-# class CommentDeleteView(LoginRequiredMixin, DeleteView):
-#     model = Comment
-#     template_name = 'blog/blog_confirm_delete.html'
-#     success_url = reverse_lazy('mainbiz:blog_detail')
-
-#     def test_func(self):
-#         return is_users(self.get_object().author, self.request.user)
-
 @login_required
-def BlogSearch(request):
+def SearchView(request):
+    query = request.GET.get('q')
+    context = {}
 
-    if request.method == 'POST':
-        query = request.POST.get('search')
-        print(query)
-        results = Blog.objects.filter(title__contains=query)
+    if query:
+        blogs = Blog.objects.filter(Q(title__icontains=query)|
+                                     Q(content__icontains=query)
+                                        )
 
-    context = {
-        'results':results
-    }
+        #pagination
+        paginator = Paginator(blogs, 6)
+        page_number = request.GET.get('page')
+        blogs_paginator = paginator.get_page(page_number)
+
+        context = {
+            'blogs':blogs_paginator,
+        }
 
     template = loader.get_template('blog/blog_search.html')
 
+    return HttpResponse(template.render(context,request))
+
+
+def TagView(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    blogs = Blog.objects.filter(tags=tag).order_by('-pub_date')
+
+
+    template = loader.get_template('blog/tag.html')
+
+    context = {
+        'tag':tag,
+        'blogs':blogs,
+    }
+
     return HttpResponse(template.render(context, request))
 
+
+def AboutUs(request):
+    
+
+    context = {
+
+    }
+
+    template = loader.get_template('aboutus.html')
+
+    return HttpResponse(template.render(context, request))
+
+def Services(request):
+
+    services = Service.objects.all()
+
+    context = {
+        'services':services
+    }
+
+    template = loader.get_template('services.html')
+
+    return HttpResponse(template.render(context, request))
+
+def EntertainmentView(request):
+    template = loader.get_template('entertainment/entertainment_list.html')
+
+    context = {
+
+    }
+
+    return HttpResponse(template.render(context, request))

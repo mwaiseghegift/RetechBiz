@@ -1,0 +1,40 @@
+{% extends "extended_base.html" %}
+{% load static %}
+{% block title %} #{{tag.title}} {% endblock title %}
+
+{% block body %}
+
+   <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/hashtag.jpg' %})">
+         <div class="container">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="hero-cap text-center pt-50">
+                           <h2>#{{tag.title}}</h2>
+                     </div>
+                  </div>
+               </div>
+         </div>
+      </div>
+
+    {% for blog in blogs %}
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <a href="{{ blog.get_absolute_url }}"><h3 class="mb-30">{{ blog.title }}</h3></a>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{{ blog.image_thumbnail.url }}" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-9 mt-sm-20">
+                        <p>{{blog.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      {% endfor %}
+
+
+{% endblock body %}
+

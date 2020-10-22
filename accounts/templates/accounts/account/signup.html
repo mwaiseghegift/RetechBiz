@@ -14,10 +14,10 @@
   {% csrf_token %}
   {{ form | crispy }}
   {{ UserProfileForm | crispy }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button style="text-align: end;" type="submit">{% trans "Sign Up" %} &raquo;</button>
+ 
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ login_url }}" />
+ 
+  <button class="btn btn-sm btn-outline-secondary mb-4 mr-2" style="text-align: end;" type="submit">{% trans "Sign Up" %} &raquo;</button>
 </form>
 
 {% endblock %}

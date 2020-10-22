@@ -1,0 +1,91 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+
+{% block body %}
+
+   <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/hashtag.jpg' %})">
+         <div class="container">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="hero-cap text-center pt-50">
+                           <h2>Services</h2>
+                     </div>
+                  </div>
+               </div>
+         </div>
+      </div>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>Services</h2>
+          <p>Our able Team has really worked together to offer the following services</p>
+        </div>
+
+      <!-- Blog -->
+      <div class="row">
+          <a href="blog/blog_list.html">
+
+              <div class="col-lg-6">
+                <div class="box wow fadeInLeft">
+                  <div class="icon"><i class="fa fa-newspaper-o"></i></div>
+                  <h4 class="title"><a href="{% url 'mainbiz:blog_list' %}">Blog</a></h4>
+                  <p class="description">
+                    This is a tech startup website, why don't we know whats going on in the tech world, 
+                    I really like them, They are also provided, We should know whats going on the tech world
+                  </p>
+                </div>
+              </div>
+
+
+        <!-- Hacking Labs -->
+
+            <div class="col-lg-6">
+              <div class="box wow fadeInLeft">
+                <div class="icon"><i class="fa fa-code"></i></div>
+                <h4 class="title"><a href="{% url 'mainbiz:hacking_lab' %}">Hacking Labs</a></h4>
+                <p class="description">
+                  This is a tech startup website, why don't we know whats going on in the tech world, 
+                  I really like them, They are also provided, We should know whats going on the tech world
+                </p>
+              </div>
+            </div>
+
+
+        <!-- video_downloaders -->
+
+            <div class="col-lg-6">
+              <div class="box wow fadeInLeft">
+                <div class="icon"><i class="fa fa-download"></i></div>
+                <h4 class="title"><a href="{% url 'mainbiz:downloaders' %}">Video Downloaders</a></h4>
+                <p class="description">
+                  This website provides all common websited video downloaders.
+                  Just don't use it for commercial perpose, if you want to, just pay for licence
+                </p>
+              </div>
+            </div>
+
+        <!-- Entertainment -->
+
+        <div class="col-lg-6">
+          <div class="box wow fadeInLeft">
+            <div class="icon"><i class="fa fa-music"></i></div>
+            <h4 class="title"><a href="{% url 'mainbiz:entertainment' %}">Entertainment</a></h4>
+            <p class="description">
+              This website provides all common websited video downloaders.
+              Just don't use it for commercial perpose, if you want to, just pay for licence
+            </p>
+          </div>
+        </div>
+
+        </a>
+      </div>
+
+   
+      </div>
+    </section>
+
+{% endblock body %}
+
+

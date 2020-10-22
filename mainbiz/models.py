@@ -50,6 +50,7 @@ class Service(models.Model):
     image = models.CharField(max_length=100, default='fa fa-bar-chart')
     available = models.BooleanField(default=True)
     link = models.CharField(default='#', max_length=50)
+    slug = models.SlugField(null=True, unique=True)
     pub_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -57,7 +58,14 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug  = slugify(self.name)
+        return super().save(*args, **kwargs)
+
+
 
 class Testimonial(models.Model):
     text = models.TextField(max_length=256)
@@ -155,14 +163,15 @@ class Category(models.Model):
         return Blog.objects.filter(category=self).count()
 
 class Tag(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Tag')
+    title = models.CharField(max_length=200)
     slug = models.SlugField(null=False, unique=True)
 
     class Meta:
+        verbose_name='Tag'
         verbose_name_plural='Tags'
 
     def get_absolute_url(self):
-        return reverse("mainbiz:tags", arg=[self.slug])
+        return reverse("mainbiz:tags", args=[self.slug])
     
     def __str__(self):
         return self.title
@@ -223,10 +232,6 @@ class Comment(models.Model):
     parent=models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
-
-    # def get_absolute_url(self):
-    #     return reverse("blog-detail", kwargs={'blog_id':self.blog.id})
-    
 
     def __str__(self):
         return self.author.username +' - '+self.content

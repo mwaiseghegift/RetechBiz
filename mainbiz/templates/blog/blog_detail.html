@@ -4,9 +4,10 @@
 {% block title %}{{ blog.title }}{% endblock title %}
 {% block body %}
 
-       <main>
+ <main>
       <!-- Hero Area Start -->
-      <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/blog.jpg' %}">
+   <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/backgrounds/retechblog1.jpg' %})">
          <div class="container">
                <div class="row">
                   <div class="col-xl-12">
@@ -106,7 +107,7 @@
                   </div>
                   <div class="blog-author">
                      <div class="media align-items-center">
-                        <img src="assets/img/blog/author.png" alt="">
+                        <img src="{{ blog.author.profile.image_thumbnail.url }}" alt="">
                         <div class="media-body">
                            <a href="#">
                               <h4>Harvard milan</h4>
@@ -116,6 +117,9 @@
                         </div>
                      </div>
                   </div>
+
+
+                  <!--Comment Section -->
                   <div class="comments-area">
                      <h4>{{blog.no_of_comments}} Comments</h4>
                      <div class="comment-list">
@@ -124,7 +128,7 @@
                         <div class="single-comment justify-content-between d-flex">
                            <div class="user justify-content-between d-flex">
                               <div class="thumb">
-                                 <img src="assets/img/comment/comment_1.png" alt="">
+                                 <img src="{{comment.author.profile.image_thumbnail.url}}" alt="">
                               </div>
                               <div class="desc">
                                  <p class="comment">
@@ -143,7 +147,7 @@
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div><br>
                         {% endif %}
                         {% empty %}
                            <p>No Comments</p>

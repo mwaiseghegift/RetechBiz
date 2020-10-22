@@ -8,13 +8,16 @@ from django.urls import reverse
 # Create your models here.
 from django.contrib.auth import get_user_model
 User = get_user_model()
-   
+
+from tinymce.models import HTMLField
+
 CATEGORY = (
     ('CEO','Chief Executive Office'),
     ('PM', 'Production Manager'),
     ('CTO', 'CTO'),
     ('Acc','Accountant'),
     ('Member','Member'),
+    ('Admin','Admin'),
 )
 
 class Manager(models.Model):
@@ -51,7 +54,7 @@ class Profile(models.Model):
                             options={'quality':80})
     status = models.CharField(max_length=256, null=True, blank=True)
     category = models.CharField(choices=CATEGORY, max_length=50, default='Member')
-    bio = models.TextField(max_length=1000, null=True, blank=True)
+    bio = HTMLField(null=True, default='')
     facebook = models.URLField(null=True, blank=True)
     twitter = models.URLField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)

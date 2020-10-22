@@ -1,6 +1,7 @@
 {% extends 'extended_base.html' %}
 {% load static %}
-<head>{{blogform.media}}</head>
+{% block title %} Profile Update {% endblock title %}
+<head>{{ profileupdateform.media }}</head>
 {% load crispy_forms_tags %}
 {% block body %}
 
@@ -24,3 +25,4 @@
 
 
 {% endblock body %}
+

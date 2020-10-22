@@ -1,13 +1,27 @@
 {% extends 'extended_base.html' %}
-
+{% load static %}
+{% block title %}Gallery{% endblock title %}
 {% block body %}
+
+   <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/hashtag.jpg' %})">
+         <div class="container">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="hero-cap text-center pt-50">
+                           <h2>Gallery</h2>
+                     </div>
+                  </div>
+               </div>
+         </div>
+      </div><br>
 
     <section id="portfolio" class="wow fadeInUp">
     
       <div class="container">
         <div class="section-header">
           <h2>Gallery</h2>
-          <p>Just picked our favourite, For more click <a href="{% url 'mainbiz:gallery' %}">here</a></p>
+          <p>Enjoy our Gallery, You can also make it upto here... Just contact the admin<a href="{% url 'mainbiz:gallery' %}">here</a></p>
         </div>
       </div>
       

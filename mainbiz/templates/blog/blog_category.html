@@ -5,17 +5,18 @@
 
    <main>
         <!-- Hero Area Start -->
-        <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/blog.jpg' %}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap text-center pt-50">
-                            <h2>Our Blog</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+   <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/hashtag.jpg' %})">
+         <div class="container">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="hero-cap text-center pt-50">
+                           <h2>{{ category.name }}</h2>
+                     </div>
+                  </div>
+               </div>
+         </div>
+      </div>
         <!-- Hero Area End -->
         <!--================Blog Area =================-->
 

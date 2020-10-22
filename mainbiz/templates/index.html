@@ -84,23 +84,65 @@
           <p>Our able Team has really worked together to offer the following services</p>
         </div>
 
-      
-        <div class="row">
-          {% for service in services %}
-            <a href="#">
+      <!-- Blog -->
+      <div class="row">
+          <a href="blog/blog_list.html">
+
               <div class="col-lg-6">
                 <div class="box wow fadeInLeft">
-                {% if service.image %}
-                  <div class="icon"><i class="{{ service.image }}"></i></div>
-                {% endif %}
-                  <h4 class="title"><a href="{{service.link}}">{{service.name}}</a></h4>
-                  <p class="description">{{ service.description }}.</p>
+                  <div class="icon"><i class="fa fa-newspaper-o"></i></div>
+                  <h4 class="title"><a href="blog/blog_list.html">Blog</a></h4>
+                  <p class="description">
+                    This is a tech startup website, why don't we know whats going on in the tech world, 
+                    I really like them, They are also provided, We should know whats going on the tech world
+                  </p>
                 </div>
               </div>
-             </a>
-            {% endfor %}
+
+
+        <!-- Hacking Labs -->
+
+            <div class="col-lg-6">
+              <div class="box wow fadeInLeft">
+                <div class="icon"><i class="fa fa-code"></i></div>
+                <h4 class="title"><a href="{% url 'mainbiz:hacking_lab' %}">Hacking Labs</a></h4>
+                <p class="description">
+                  This is a tech startup website, why don't we know whats going on in the tech world, 
+                  I really like them, They are also provided, We should know whats going on the tech world
+                </p>
+              </div>
+            </div>
+
+
+        <!-- video_downloaders -->
+
+            <div class="col-lg-6">
+              <div class="box wow fadeInLeft">
+                <div class="icon"><i class="fa fa-download"></i></div>
+                <h4 class="title"><a href="{% url 'mainbiz:downloaders' %}">Video Downloaders</a></h4>
+                <p class="description">
+                  This website provides all common websited video downloaders.
+                  Just don't use it for commercial perpose, if you want to, just pay for licence
+                </p>
+              </div>
+            </div>
+
+        <!-- Entertainment -->
+
+        <div class="col-lg-6">
+          <div class="box wow fadeInLeft">
+            <div class="icon"><i class="fa fa-music"></i></div>
+            <h4 class="title"><a href="{% url 'mainbiz:entertainment' %}">Entertainment</a></h4>
+            <p class="description">
+              This website provides all common websited video downloaders.
+              Just don't use it for commercial perpose, if you want to, just pay for licence
+            </p>
+          </div>
         </div>
-       
+
+        </a>
+      </div>
+
    
       </div>
     </section>
@@ -108,7 +150,7 @@
     <!--==========================
       Clients Section
     ============================-->
-    <section id="clients" class="wow fadeInUp">
+    {% comment %} <section id="clients" class="wow fadeInUp">
       <div class="container">
         <div class="section-header">
           <h2>Clients</h2>
@@ -127,7 +169,7 @@
         </div>
 
       </div>
-    </section><!-- #clients -->
+    </section><!-- #clients --> {% endcomment %}
 
     <!--==========================
       Gallery Section
@@ -208,7 +250,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="member">
                 {% if manager.image %}
-                  <div class="pic"><img src="{{ manager.image_thumbnail.url }}" alt="committee image"></div>
+                  <div class="pic"><img src="{{ manager.user.profile.image_thumbnail.url }}" alt="committee image"></div>
                 {% endif %}
                 <div class="details">
                   <a href="{% url 'profiles:profile_details' manager.user.username %}"><h4>{{ manager.user }}</h4></a>

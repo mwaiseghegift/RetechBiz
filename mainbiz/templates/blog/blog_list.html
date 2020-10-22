@@ -5,7 +5,8 @@
 
    <main>
         <!-- Hero Area Start -->
-        <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/blog.jpg' %}">
+   <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/backgrounds/retechblog1.jpg' %})">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -15,13 +16,15 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <hr>
         <!-- Hero Area End -->
         <!--================Blog Area =================-->
+<div class="container col-6"> 
+    <div class="create-buttons">
+        <a class="btn btn-success" href="{% url 'mainbiz:blog_create' %}">Add Post</a>
+    </div>
 
-        <div class="create-buttons">
-            <a class="btn btn-success" href="{% url 'mainbiz:blog_create' %}">Add Post</a>
-        </div>
+</div>
 
 
         <section class="blog_area section-padding">
@@ -30,14 +33,14 @@
                     <div class="col-lg-8 mb-5 mb-lg-0">
                         <div class="blog_left_sidebar">
                             <article class="blog_item">
-                            {% for blog in blogs %}
+                            {% for blog in page_obj %}
                                 <div class="blog_item_img">
                                 {% if blog.image %}
                                     <img class="card-img rounded-0" src="{{blog.image_thumbnail.url}}" alt="{{blog.name}}">
                                 {% endif %}
                                     <a href="#" class="blog_item_date">
-                                        <h3>15</h3>
-                                        <p>Jan</p>
+                                        <h3>{{blog.pub_date.day}}</h3>
+                                        <p>{{blog.pub_date|date:'M'}}</p>
                                     </a>
                                 </div>
 
@@ -54,27 +57,51 @@
                             {% endfor %}
                             </article>
 
-                            
-                            <nav class="blog-pagination justify-content-center d-flex">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Previous">
-                                            <i class="ti-angle-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a href="#" class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Next">
-                                            <i class="ti-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                           {% comment %} <nav class="blog-pagination justify-content-center d-flex"> 
+                            <div class="pagination">
+                                <span class="page-item">
+                                    {% if page_obj.has_previous %}
+                                        <a href="?page=1">&laquo; first</a>
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                    {% endif %}
+
+                                    <span class="current">
+                                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                    </span>
+
+                                    {% if page_obj.has_next %}
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div> {% endcomment %}
+
+
+                            <div class="full-width d-flex justify-content-center">
+                                    {% if page_obj.has_previous %}
+                                        <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                                                href="?page=1">First</a>
+                                        <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                                                href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                    {% endif %}
+
+                                    {% for num in page_obj.paginator.page_range %}
+                                        {% if page_obj.number == num %}
+                                            <a class="btn btn-sm btn-info mb-4 mr-2"
+                                                href="?page={{ num }}">{{ num }}</a>
+                                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                            <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                                                href="?page={{ num }}">{{ num }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if page_obj.has_next %}
+                                        <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                                                href="?page={{ page_obj.next_page_number }}">Next</a>
+                                            <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                                            href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                    {% endif %}
+                            </div>
                         </div>
                     </div>
 

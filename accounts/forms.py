@@ -29,3 +29,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['profile_picture','bio','facebook','twitter','email','linkedin']
+
+        widgets = {
+            'bio': forms.Textarea(attrs={'class':'textarea.tinymce'}),
+        }

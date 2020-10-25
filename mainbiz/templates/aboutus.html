@@ -1,1 +1,54 @@
 {% extends 'extended_base.html' %}
+{% load static %}
+
+{% block title %} About Us {% endblock title %}
+
+{% block body %}
+
+
+<div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+style="background-image: url({% static 'img/hashtag.jpg' %})">
+ <div class="container">
+       <div class="row">
+          <div class="col-xl-12">
+             <div class="hero-cap text-center pt-50">
+                   <h2>About Us</h2>
+             </div>
+          </div>
+       </div>
+ </div>
+</div>
+
+<div class="container">
+    <div class="about-details-area section-padding2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="about-tittle">
+                        <h2>About Us</h2>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="about-details mb-50">
+                        <p class="pear1">We believe that every project existing in digital world is a result of an idea and every idea has a cause. </p>
+                        <p class="pear2">Amet, consectetur adipisicing elit, sed dosmod tempor didunt ut labore et dolor dfagna iqus ad minim veniam quis. sectetur adipisicing eld do eiusmod tempor didunt ut labore et dolore magna aliqus ad minim.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="about-tittle">
+                        <h2>Mission</h2>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="about-details">
+                        <p class="pear1">We believe that every project existing in digital world is a result of an idea and every idea has a cause. </p>
+                        <p class="pear2">Amet, consectetur adipisicing elit, sed dosmod tempor didunt ut labore et dolor dfagna iqus ad minim veniam quis. sectetur adipisicing eld do eiusmod tempor didunt ut labore et dolore magna aliqus ad minim.</p>
+                        <p class="pear2">Amet, consectetur adipisicing elit, sed dosmod tempor didunt ut labore et dolor dfagna iqus ad minim veniam quis. sectetur adipisicing eld do eiusmod tempor didunt ut labore et dolore magna aliqus ad minim.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

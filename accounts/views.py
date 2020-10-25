@@ -7,7 +7,9 @@ from .models import Profile, Manager
 from django.views.generic import CreateView,UpdateView,CreateView,DetailView,ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+
+from django.template import loader
 # Create your views here.   
 
 class ManagerDetailView(ListView):
@@ -16,14 +18,6 @@ class ManagerDetailView(ListView):
 
     def get_object(self):
         return Manager.objects.filter(user=User)
-
-# class UserProfileView(DetailView):
-#     model = Profile
-#     template_name = 'users/user_profile.html'
-
-    
-#     def get_object(self):
-#         return self.request.user.profile
 
 class UserProfileUpdateView(UpdateView):
     template_name = 'users/profile_update.html'
@@ -66,3 +60,16 @@ def ProfileEdit(request, username):
     }
 
     return render(request, 'users/profile_update.html', context)
+
+
+def TeamView(request):
+
+    teams = Manager.objects.all()
+
+    context = {
+        'teams': teams
+    }
+
+    template = loader.get_template('users/team.html')
+
+    return HttpResponse(template.render(context, request))

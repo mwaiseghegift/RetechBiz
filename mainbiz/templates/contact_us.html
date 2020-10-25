@@ -1,0 +1,67 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+{% block title %} contact us {% endblock title %}
+
+
+
+{% block body %}
+
+
+    <div class="hero-area hero-height2 d-flex align-items-center" data-background="{% static 'img/backgrounds/retechblog1.jpg' %}" 
+        style="background-image: url({% static 'img/hashtag.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center pt-50">
+                        <h2>ContactUs</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">Get in Touch</h2>
+            </div>
+            <div class="col-lg-8">
+                <form class="form-contact contact_form" method="post" id="contactForm" novalidate="novalidate">
+
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                    <div class="form-group mt-3">
+                        <button type="submit" class="button button-contactForm boxed-btn">Send</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-3 offset-lg-1">
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-home"></i></span>
+                    <div class="media-body">
+                        <h3>Mwatate, Taita Taveta.</h3>
+                        <p>Jombo, 47 80305</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                    <div class="media-body">
+                        <h3>+254 71286 0997</h3>
+                        <p>24 hours Everyday Service</p>
+                    </div>
+                </div>
+                <div class="media contact-info">
+                    <span class="contact-info__icon"><i class="ti-email"></i></span>
+                    <div class="media-body">
+                        <h3><a href="mailto:retechempire@gmail.com">support@retech.com</a></h3>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+{% endblock body %}

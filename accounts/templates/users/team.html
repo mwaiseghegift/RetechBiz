@@ -1,0 +1,32 @@
+{% extends 'extended_base.html' %}
+{% load static %}
+{% block title %} Team {% endblock title %}
+
+
+{% block body %}
+
+{% for team in teams %}
+
+<div class="container">
+    <div class="card mb-3 col-8" style="margin: auto;">
+        <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{ team.user.profile.image_thumbnail.url }}" class="card-img" alt="...">
+                </div>
+
+            <div class="col-md-8">
+                <h5 class="card-header">{{ team.user.username }}</h5>
+                <div class="card-body"> 
+                    <h7 class="card-title"><b>{{ team.category }}</b></h4>                  
+                    <p class="card-text">{{ team.user.profile.bio|safe }}</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div><br>
+
+{% endfor %}
+
+{% endblock body %}

@@ -255,7 +255,7 @@ def AboutUs(request):
     
 
     context = {
-
+        
     }
 
     template = loader.get_template('aboutus.html')
@@ -282,3 +282,32 @@ def EntertainmentView(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def contact_view(request):
+    if request.method == 'GET':
+        form = ContactForm()
+
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['your_email']
+            message = form.cleaned_data['message']
+
+            try:
+                send_mail(subject, message, from_email, ['itsregalo047@gmail.com'])
+
+            except BadHeaderError:
+                return HttpResponse('invalid header found')
+
+            return HttpResponseRedirect(reverse('mainbiz:contact'))
+
+    context = {
+        'form':form,
+    }
+
+    template = loader.get_template('contact_us.html')
+
+    return HttpResponse(template.render(context, request))
+

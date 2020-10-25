@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from . import views
+from accounts.views import TeamView
 
 app_name = 'mainbiz'
 
@@ -20,4 +21,7 @@ urlpatterns = [
     path('hackinglab/', views.TemplateView.as_view(template_name='hacking_lab.html'), name='hacking_lab'),
     path('videodownloaders/', views.TemplateView.as_view(template_name='video_downloaders.html'), name='downloaders'),
     path('entertainment/', views.EntertainmentView, name='entertainment'),
+    path('team/', TeamView, name='team'),
+    path('contactus/', views.contact_view, name='contact'),
+    path('aboutus/', views.AboutUs, name='about-us'),
 ]

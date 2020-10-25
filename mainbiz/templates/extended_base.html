@@ -35,6 +35,24 @@
 </head>
 
 <body id="body">
+  
+<!-- Messages -->
+
+<div class="container">
+  {% if messages %}
+  <div>
+    <strong>Messages:</strong>
+    <ul>
+      {% for message in messages %}
+      <li>{{message}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+
+<!-- End Message -->
+
 
   <!--==========================
     Top Bar
@@ -55,6 +73,8 @@
     </div>
   </section>
 
+
+
    <!--==========================
     Header
   ============================-->
@@ -62,7 +82,7 @@
     <div class="container">
 
       <div id="logo" class="pull-left">
-        <h1><a href="{% url 'mainbiz:index' %}" class="scrollto">ReTech<span>Biz</span></a></h1>
+        <h1><a href="{% url 'mainbiz:index' %}" class="scrollto">ReTech<span>Empire</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
       </div>
@@ -76,10 +96,9 @@
           <li><a href="{% url 'mainbiz:gallery' %}">Gallery</a></li>
           <li class="menu-has-children"><a href="">More</a>
             <ul>
-              <li><a href="#team">Team</a></li>
-              <li><a href="#">Achievements</a></li>
+              <li><a href="{% url 'mainbiz:team' %}">Team</a></li>
+              <li><a href="{% url 'mainbiz:about-us' %}">About Us</a></li>
               <li><a href="#">About CEO</a></li>
-              <li><a href="#about">About Us</a></li>
             </ul>
           </li>
           {% if request.user.is_authenticated %}
@@ -98,7 +117,7 @@
             </li>
           {% endif %}
 
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="{% url 'mainbiz:contact' %}">Contact</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>

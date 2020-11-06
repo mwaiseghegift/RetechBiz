@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,8 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$l(9qni+ytuxo*p2^)m)ks67zmgds5uho=n^o&r*ks)!#9so!6'
-
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -173,11 +173,11 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# DEFAULT_FROM_MAIL = 'itsregalo047@gmail.com'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
-EMAIL_PORT = 465 
+DEFAULT_FROM_MAIL = 'itsregalo047@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'retechempire@gmail.com'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 ACCOUNT_EMAIL_REQUIRED  = True
@@ -191,8 +191,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 LOGIN_REDIRECT_URL ='/'
 LOGOUT_REDIRECT_URL = '/'
 
-
-#newsletter subscription with mailchip
-MAILCHIMP_API_KEY = '890eaa232c11192db0b8965c4ed178c1-us2'
-MAILCHIMP_DATA_CENTRE = 'us2'
-MAILCHIMP_EMAIL_LIST_ID = '77d725cc67'

@@ -21,14 +21,6 @@ from django.core.paginator import Paginator
 from django.conf import settings
 
 
-MAILCHIMP_API_KEY = settings.MAILCHIMP_API_KEY
-MAILCHIMP_DATA_CENTRE = settings.MAILCHIMP_DATA_CENTRE
-MAILCHIMP_EMAIL_LIST_ID = settings.MAILCHIMP_EMAIL_LIST_ID
-
-api_url = f'https://{MAILCHIMP_DATA_CENTRE}.api.mailchimp.com/3.0'
-members_endpoint = f'{api_url}/lists/{MAILCHIMP_EMAIL_LIST_ID}/members'
-
-
 # Create your views here.
 def is_users(post_user, logged_user):
     return post_user == logged_user
@@ -296,7 +288,7 @@ def contact_view(request):
             message = form.cleaned_data['message']
 
             try:
-                send_mail(subject, message, from_email, ['itsregalo047@gmail.com'])
+                send_mail(subject, message, from_email, ['retechempire@gmail.com'])
 
             except BadHeaderError:
                 return HttpResponse('invalid header found')

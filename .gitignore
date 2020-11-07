@@ -1,4 +1,4 @@
 /media
 .vscode
 db.sqlite3
-*.env
+.env
